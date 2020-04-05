@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  vue:
+    build:
+      context: ./
+      dockerfile: ./docker/vue/Dockerfile
+    volumes:
+      - ./front:/app
+      - node_modules:/app/node_modules
+    ports: 
+      - 8080:8080
+    tty: true
+volumes:
+  node_modules:
+      driver: local
