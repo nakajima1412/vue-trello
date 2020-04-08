@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div v-if="isTaskOpen" @click="close" class="task-bg">
+    <div v-if="isTaskOpen" @click.self="close" class="task-bg">
       <router-view />
     </div>
   </div>
