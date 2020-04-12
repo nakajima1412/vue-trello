@@ -23,7 +23,7 @@
             @click="goToTask(task)"
             @dragover.prevent
             @dragenter.prevent
-            @drop.stop="moveTask($event, column.tasks, $taskIndex)"
+            @drop.stop="moveTaskOrColumn($event, column.tasks, $columnIndex, $taskIndex)"
             class="task">
             <span class="w-full flex-no-shrink font-bold">
               {{ task.name }}
@@ -87,10 +87,10 @@ export default {
       e.dataTransfer.setData('from-column-index', fromColumnIndex)
       e.dataTransfer.setData('type', 'column')
     },
-    moveTaskOrColumn (e, toTasks, toColumnIndex) {
+    moveTaskOrColumn (e, toTasks, toColumnIndex, toTaskIndex) {
       const type = e.dataTransfer.getData('type')
       if (type === 'task') {
-        this.moveTask(e, toTasks)
+        this.moveTask(e, toTasks, toTaskIndex !== undefined ? toTaskIndex : toTasks.length)
       } else {
         this.moveColumn(e, toColumnIndex)
       }
