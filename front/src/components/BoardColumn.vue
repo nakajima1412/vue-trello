@@ -1,43 +1,48 @@
 <template>
-  <div
-    class="column"
-    draggable
-    @drop="moveTaskOrColumn($event, column.tasks, columnIndex)"
-    @dragover.prevent
-    @dragenter.prevent
-    @dragstart.self="pickupColumn($event, columnIndex)"
+  <AppDrop @drop="moveTaskOrColumn">
+    <AppDrag
+      class="column"
+      :transferData="{
+        type: 'column',
+        fromColumnIndex: columnIndex
+      }"
     >
-    <div class="flex items-center mb-2 float-fold">
-      {{ column.name }}
-    </div>
-    <div class="list-reset">
-      <ColumnTask
-        v-for="(task, $taskIndex) of column.tasks"
-        :key="$taskIndex"
-        :task="task"
-        :taskIndex="$taskIndex"
-        :column="column"
-        :columnIndex="columnIndex"
-        :board="board"
-      />
+      <div class="flex items-center mb-2 font-bold">
+        {{ column.name }}
+      </div>
+      <div class="list-reset">
+        <ColumnTask
+          v-for="(task, $taskIndex) of column.tasks"
+          :key="$taskIndex"
+          :task="task"
+          :taskIndex="$taskIndex"
+          :column="column"
+          :columnIndex="columnIndex"
+          :board="board"
+        />
 
-      <input
-        @keyup.enter="createTask($event, column.tasks)"
-        type="text"
-        class="block pd-2 w-full bg-transparent"
-        placeholder="+ Enter New Task"
-      />
-    </div>
-  </div>
+        <input
+          type="text"
+          class="block p-2 w-full bg-transparent"
+          placeholder="+ Enter new task"
+          @keyup.enter="createTask($event, column.tasks)"
+        />
+      </div>
+    </AppDrag>
+  </AppDrop>
 </template>
 
 <script>
 import ColumnTask from './ColumnTask.vue'
+import AppDrag from './AppDrag.vue'
+import AppDrop from './AppDrop.vue'
 import movingTaskAndColumnsMixin from '@/mixins/movingTaskAndColumnsMixin.js'
 
 export default {
   components: {
-    ColumnTask
+    ColumnTask,
+    AppDrag,
+    AppDrop
   },
   mixins: [movingTaskAndColumnsMixin],
   methods: {
