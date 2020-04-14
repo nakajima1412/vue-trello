@@ -14,10 +14,14 @@ export default {
   props: {
     transferData: {
       type: Object,
-      required: true
+      required: true,
+      default: () => {}
     }
   },
   onDrag (e) {
+    e.dataTransfer.effectAllowed = 'move'
+    e.dataTransfer.dropEffect = 'move'
+
     e.dataTransfer.setData('payload', JSON.stringify(this.transferData))
   }
 }
