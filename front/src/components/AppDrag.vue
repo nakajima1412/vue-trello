@@ -18,11 +18,13 @@ export default {
       default: () => {}
     }
   },
-  onDrag (e) {
-    e.dataTransfer.effectAllowed = 'move'
-    e.dataTransfer.dropEffect = 'move'
+  methods: {
+    onDrag (e) {
+      e.dataTransfer.effectAllowed = 'move'
+      e.dataTransfer.dropEffect = 'move'
 
-    e.dataTransfer.setData('payload', JSON.stringify(this.transferData))
+      e.dataTransfer.setData('payload', JSON.stringify(this.transferData))
+    }
   }
 }
 </script>
